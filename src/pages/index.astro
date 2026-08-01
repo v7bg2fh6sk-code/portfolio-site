@@ -1,5 +1,30 @@
 ---
 import '../styles/global.css';
+
+// Данные вынесены наверх, отдельно от разметки.
+// Так проще править цены: меняешь здесь — меняется на сайте.
+// Ниже мы пройдёмся по этому массиву циклом и отрисуем карточки.
+const services = [
+	{
+		title: 'Telegram-бот',
+		price: 'от 15 000 ₽',
+		description: 'Меню, приём заявок, уведомления, рассылки. Подключение к вашим таблицам или CRM.',
+		features: ['Сценарий и логика бота', 'Хостинг и запуск на сервере', '2 недели поддержки после сдачи'],
+	},
+	{
+		title: 'Бот с оплатой',
+		price: 'от 35 000 ₽',
+		description: 'Подписки, приём платежей, база пользователей, админ-панель со статистикой.',
+		features: ['Платежи и подписки', 'База данных и админка', 'Реферальная система'],
+		featured: true, // помечаем главную услугу — подсветим её рамкой
+	},
+	{
+		title: 'Сайт-лендинг',
+		price: 'от 20 000 ₽',
+		description: 'Одностраничный сайт под задачу: услуги, товар, запись. Адаптив под телефон.',
+		features: ['Вёрстка и адаптив', 'Форма заявок', 'Публикация и домен'],
+	},
+];
 ---
 
 <html lang="ru">
@@ -8,32 +33,139 @@ import '../styles/global.css';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Леонид — разработчик. Telegram-боты, сайты, интеграции." />
-		<title>Леонид — разработчик</title>
+		<meta name="description" content="Леонид — разработчик. Telegram-боты с оплатой, сайты, интеграции." />
+		<title>Леонид — разработчик Telegram-ботов</title>
 	</head>
+
+	<!--
+		Разбор классов на body:
+		min-h-screen  — высота минимум во весь экран
+		bg-neutral-950 — почти чёрный фон (у Tailwind шкала оттенков 50…950, чем больше — тем темнее)
+		text-neutral-100 — почти белый текст
+		antialiased   — сглаживание шрифта, буквы выглядят мягче
+	-->
 	<body class="min-h-screen bg-neutral-950 text-neutral-100 antialiased">
-		<main class="mx-auto flex min-h-screen max-w-2xl flex-col justify-center px-6 py-20">
+
+		<!--
+			ПЕРВЫЙ ЭКРАН
+			mx-auto   — центрируем блок по горизонтали
+			max-w-3xl — ограничиваем ширину: длинные строки читать тяжело
+			px-6      — отступы слева и справа (чтобы текст не липнул к краям на телефоне)
+			py-24     — отступы сверху и снизу
+		-->
+		<header class="mx-auto max-w-3xl px-6 py-24 sm:py-32">
 			<p class="mb-4 text-sm uppercase tracking-widest text-neutral-500">
-				Скоро здесь будет портфолио
+				Разработка на заказ
 			</p>
 
+			<!--
+				text-4xl → размер на телефоне
+				sm:text-6xl → размер на экранах шире 640px
+				Принцип Tailwind: сначала пишем мобильную версию, потом через префиксы
+				sm: / md: / lg: добавляем изменения для экранов побольше.
+			-->
 			<h1 class="text-4xl font-semibold leading-tight sm:text-6xl">
-				Леонид
+				Telegram-боты,<br />которые приносят деньги
 			</h1>
 
-			<p class="mt-6 text-lg leading-relaxed text-neutral-400 sm:text-xl">
-				Делаю Telegram-ботов, сайты и интеграции. Пишу код, поднимаю серверы,
-				довожу до рабочего состояния.
+			<p class="mt-6 max-w-xl text-lg leading-relaxed text-neutral-400">
+				Меня зовут Леонид. Делаю ботов с приёмом оплаты, базой пользователей
+				и админкой — от идеи до работающего сервера. Пишу код сам, серверы
+				настраиваю сам.
 			</p>
 
-			<div class="mt-10">
+			<div class="mt-10 flex flex-wrap gap-3">
 				<a
 					href="https://t.me/yriveee"
 					class="inline-flex items-center rounded-lg bg-neutral-100 px-5 py-3 font-medium text-neutral-950 transition hover:bg-white"
 				>
-					Написать в Telegram
+					Обсудить задачу
+				</a>
+				<!-- href="#services" — якорь: плавно прокручивает к блоку с id="services" -->
+				<a
+					href="#services"
+					class="inline-flex items-center rounded-lg border border-neutral-800 px-5 py-3 font-medium text-neutral-300 transition hover:border-neutral-600 hover:text-white"
+				>
+					Услуги и цены
 				</a>
 			</div>
-		</main>
+		</header>
+
+		<!--
+			УСЛУГИ
+			id="services" — сюда ведёт кнопка выше
+			border-t — тонкая линия сверху, отделяет секцию
+		-->
+		<section id="services" class="border-t border-neutral-900">
+			<div class="mx-auto max-w-3xl px-6 py-20">
+				<h2 class="text-2xl font-semibold sm:text-3xl">Услуги и цены</h2>
+				<p class="mt-3 text-neutral-400">
+					Цены — за типовую задачу. Точную назову после короткого разговора: часто
+					выходит дешевле, чем кажется.
+				</p>
+
+				<!--
+					grid    — включаем сетку
+					gap-4   — расстояние между карточками
+					sm:grid-cols-3 — на широком экране 3 колонки, на телефоне остаётся 1
+				-->
+				<div class="mt-10 grid gap-4 sm:grid-cols-3">
+					{
+						/*
+							Цикл по массиву services из шапки файла.
+							На каждый объект отрисовывается одна карточка.
+							Добавишь услугу в массив — карточка появится сама.
+						*/
+						services.map((service) => (
+							<div
+								class={`rounded-xl border p-6 ${
+									service.featured
+										? 'border-neutral-700 bg-neutral-900'
+										: 'border-neutral-900 bg-neutral-950'
+								}`}
+							>
+								<h3 class="font-medium">{service.title}</h3>
+								<p class="mt-2 text-2xl font-semibold">{service.price}</p>
+								<p class="mt-3 text-sm leading-relaxed text-neutral-400">
+									{service.description}
+								</p>
+
+								<ul class="mt-4 space-y-2">
+									{service.features.map((feature) => (
+										<li class="flex gap-2 text-sm text-neutral-400">
+											<span class="text-neutral-600">—</span>
+											<span>{feature}</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<!--
+			КЕЙСЫ — наполним на Этапе 3 (ВПН Бот + коммерческий лендинг).
+			Пока блок-заглушка, чтобы структура страницы была видна целиком.
+		-->
+		<section id="cases" class="border-t border-neutral-900">
+			<div class="mx-auto max-w-3xl px-6 py-20">
+				<h2 class="text-2xl font-semibold sm:text-3xl">Работы</h2>
+				<p class="mt-3 text-neutral-400">Скоро здесь будут кейсы.</p>
+			</div>
+		</section>
+
+		<!--
+			КОНТАКТЫ — этот блок пишешь ты.
+			Задание в чате. Разметку ниже замени на свою.
+		-->
+		<section id="contacts" class="border-t border-neutral-900">
+			<div class="mx-auto max-w-3xl px-6 py-20">
+				<h2 class="text-2xl font-semibold sm:text-3xl">Контакты</h2>
+				<p class="mt-3 text-neutral-400">TODO: блок делает Леонид</p>
+			</div>
+		</section>
+
 	</body>
 </html>
