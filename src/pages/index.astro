@@ -22,6 +22,34 @@ const services = [
 		features: ['Вёрстка и адаптив', 'Форма заявок', 'Публикация и домен'],
 	},
 ];
+
+/*
+	Кейсы. Структура каждого — задача, решение, результат.
+	Заказчик читает не «что я использовал», а «что человек получил».
+	Поэтому result идёт крупно и первым в глаза.
+*/
+const cases = [
+	{
+		title: 'PrivatVPN — бот с подпиской',
+		tag: 'Telegram-бот',
+		task: 'Продавать доступ к VPN и выдавать рабочий конфиг без участия человека — чтобы клиент платил и подключался сам, круглосуточно.',
+		solution: 'Бот на aiogram, база пользователей, оплата картой и Telegram Stars, реферальная программа с кэшбеком. Свой сервер с панелью 3X-UI: бот обращается к её API, создаёт клиента и отдаёт персональный ключ.',
+		result: 'Полный цикл без ручной работы: оплата → ключ → подключение примерно за минуту.',
+		stack: ['Python', 'aiogram 3', 'SQLite', 'VLESS + Reality', '3X-UI API', 'Telegram Stars'],
+		link: 'https://t.me/PrivatVPN2010_bot',
+		linkLabel: 'Открыть бота',
+	},
+	{
+		title: 'PrivatVPN — сайт сервиса',
+		tag: 'Лендинг',
+		task: 'Страница, которая объясняет незнакомому человеку, что это за сервис, и доводит до бота. Плюс требовалось ускорить загрузку — сайт весил почти мегабайт.',
+		solution: 'Пиксельный стиль, тёмная и светлая тема с запоминанием выбора, появление блоков при прокрутке, аккордеон вопросов. Картинку перевёл в WebP, шрифт перенёс на свой домен и разбил по алфавитам.',
+		result: 'Вес страницы упал с ~800 КБ до 224 КБ, внешних запросов не осталось ни одного. Попутно нашёл и починил баг: блоки вопросов раскрывались сами при прокрутке.',
+		stack: ['HTML', 'CSS', 'JavaScript', 'WebP', 'Vercel'],
+		link: 'https://privatvpn-site.vercel.app',
+		linkLabel: 'Посмотреть сайт',
+	},
+];
 ---
 
 <html lang="ru">
@@ -147,15 +175,63 @@ const services = [
 			</div>
 		</section>
 
-		<!-- РАБОТЫ — наполним на Этапе 3 -->
+		<!-- РАБОТЫ -->
 		<section id="cases" class="mx-auto max-w-[1280px] px-6 py-[96px] text-center">
 			<p class="reveal t-label text-saffron-spark">Работы</p>
 			<h2 class="reveal reveal-delay-1 t-heading mx-auto mt-[24px] max-w-[600px]">
 				Что уже сделано
 			</h2>
 			<p class="reveal reveal-delay-2 t-body mx-auto mt-[24px] max-w-[520px] text-silver-mist">
-				Скоро здесь будут кейсы.
+				Обе работы живые — можно открыть и потрогать, а не смотреть на скриншоты.
 			</p>
+
+			<div class="mx-auto mt-[60px] max-w-[900px] space-y-[36px]">
+				{
+					cases.map((project, index) => (
+						<article class={`reveal reveal-delay-${index + 1} border-t border-white/10 pt-[36px] text-left`}>
+
+							{/* Метка типа работы — чтобы с одного взгляда было ясно, бот это или сайт */}
+							<p class="t-label text-electric-iris">{project.tag}</p>
+
+							<h3 class="t-heading-sm mt-[12px]">{project.title}</h3>
+
+							{/* Результат вынесен наверх и крупно: заказчик читает его первым */}
+							<p class="t-body mt-[24px] max-w-[640px] text-bone-white">
+								{project.result}
+							</p>
+
+							<div class="mt-[30px] grid gap-[24px] sm:grid-cols-2">
+								<div>
+									<p class="t-label text-ash-gray">Задача</p>
+									<p class="t-body mt-[12px] text-silver-mist">{project.task}</p>
+								</div>
+								<div>
+									<p class="t-label text-ash-gray">Решение</p>
+									<p class="t-body mt-[12px] text-silver-mist">{project.solution}</p>
+								</div>
+							</div>
+
+							{/* Стек — мелкими плашками, он важен, но не главный герой */}
+							<ul class="mt-[30px] flex flex-wrap gap-[12px]">
+								{project.stack.map((tech) => (
+									<li class="rounded-full border border-white/10 px-[12px] py-[6px] text-sm text-ash-gray">
+										{tech}
+									</li>
+								))}
+							</ul>
+
+							<a
+								href={project.link}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="t-label mt-[30px] inline-block text-bone-white underline decoration-electric-iris decoration-2 underline-offset-8 transition-colors hover:text-electric-iris"
+							>
+								{project.linkLabel} →
+							</a>
+						</article>
+					))
+				}
+			</div>
 		</section>
 
 		<!-- КОНТАКТЫ — этот блок пишешь ты -->
