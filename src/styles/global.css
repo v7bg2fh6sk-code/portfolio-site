@@ -1,1 +1,100 @@
 @import "tailwindcss";
+
+/*
+  ============================================
+  АНИМАЦИИ
+  ============================================
+  Здесь лежат стили, которых нет в Tailwind из коробки.
+  Обычные отступы и цвета пишем классами прямо в разметке,
+  а вот собственные анимации удобнее держать в одном месте.
+*/
+
+/* Плавная прокрутка к якорям (#services, #contacts) вместо мгновенного прыжка */
+html {
+	scroll-behavior: smooth;
+}
+
+/*
+  ПОЯВЛЕНИЕ ПРИ ПРОКРУТКЕ
+  Работает так:
+  1. Блоку ставим class="reveal" — он невидим и сдвинут вниз на 24px
+  2. JS замечает, что блок доехал до экрана, и добавляет класс "is-visible"
+  3. Блок плавно всплывает на место
+*/
+.reveal {
+	opacity: 0;
+	transform: translateY(24px);
+	transition:
+		opacity 0.7s ease-out,
+		transform 0.7s ease-out;
+}
+
+.reveal.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/*
+  Задержки — чтобы карточки появлялись не разом, а по очереди.
+  Вешаем на вторую карточку delay-1, на третью delay-2 и т.д.
+*/
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/*
+  СВЕЧЕНИЕ НА ПЕРВОМ ЭКРАНЕ
+  Размытое цветное пятно за заголовком. Медленно пульсирует.
+  pointer-events: none — чтобы пятно не перехватывало клики.
+*/
+.glow {
+	pointer-events: none;
+	position: absolute;
+	border-radius: 9999px;
+	filter: blur(100px);
+	opacity: 0.25;
+	animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+	0%, 100% { opacity: 0.18; transform: scale(1); }
+	50%      { opacity: 0.32; transform: scale(1.15); }
+}
+
+/*
+  ПОЯВЛЕНИЕ ПЕРВОГО ЭКРАНА
+  Он виден сразу при загрузке, ждать прокрутки нечего —
+  поэтому анимация запускается сама, без JS.
+*/
+@keyframes rise {
+	from { opacity: 0; transform: translateY(20px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+
+.rise {
+	animation: rise 0.8s ease-out both;
+}
+
+.rise-delay-1 { animation-delay: 0.1s; }
+.rise-delay-2 { animation-delay: 0.2s; }
+.rise-delay-3 { animation-delay: 0.3s; }
+
+/*
+  ДОСТУПНОСТЬ — обязательный блок, не пропускай его.
+  У части людей в системе включено «уменьшить движение»: анимации
+  вызывают у них головокружение и тошноту. Этот код отключает
+  для них всё движение. Две минуты работы, а сайт остаётся
+  пригодным для всех. Профессионалы это делают всегда.
+*/
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+
+	.reveal,
+	.rise,
+	.glow {
+		animation: none !important;
+		transition: none !important;
+		opacity: 1 !important;
+		transform: none !important;
+	}
+}
