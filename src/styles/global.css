@@ -1,32 +1,133 @@
 @import "tailwindcss";
 
+/* Inter — свободная замена PPNeueMontreal (шрифт Dala платный).
+   Variable-версия: один файл несёт все веса от 100 до 900,
+   поэтому вес 200 для body доступен без отдельной загрузки. */
+@import "@fontsource-variable/inter";
+
+/*
+  ============================================
+  ДИЗАЙН-ТОКЕНЫ (референс Dala)
+  ============================================
+  @theme — способ Tailwind 4 объявить свои цвета и размеры.
+  Написал здесь --color-electric-iris — и в разметке доступны
+  классы bg-electric-iris, text-electric-iris, border-electric-iris.
+  Меняешь значение тут — меняется по всему сайту разом.
+*/
+@theme {
+	/* Цвета */
+	--color-void: #000000;
+	--color-bone-white: #ffffff;
+	--color-ash-gray: #9a9a9a;
+	--color-silver-mist: #bdbdbd;
+	--color-electric-iris: #8052ff;
+	--color-saffron-spark: #ffb829;
+	--color-deep-verdant: #15846e;
+
+	/* Шрифт */
+	--font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+	/*
+	  Шкала размеров. Отрицательный tracking на крупных кеглях —
+	  подпись этого стиля: чем крупнее буквы, тем плотнее их ставят,
+	  иначе заголовок выглядит рыхлым.
+	*/
+	--text-caption: 12px;
+	--text-nav-label: 14px;
+	--text-body: 18px;
+	--text-heading-2xs: 24px;
+	--text-heading-xs: 27px;
+	--text-subheading: 36px;
+	--text-heading-sm: 42px;
+	--text-heading: 48px;
+	--text-heading-lg: 78px;
+	--text-display: 113px;
+
+	/* Отступы: базовая единица 6px */
+	--spacing-6: 6px;
+	--spacing-12: 12px;
+	--spacing-18: 18px;
+	--spacing-24: 24px;
+	--spacing-30: 30px;
+	--spacing-36: 36px;
+	--spacing-60: 60px;
+	--spacing-96: 96px;
+	--spacing-120: 120px;
+
+	/* Скругления */
+	--radius-3xl: 24px;
+	--radius-full: 9999px;
+}
+
+/*
+  ============================================
+  ТИПОГРАФИКА
+  ============================================
+  Готовые классы под шкалу из референса, чтобы не расписывать
+  размер + межстрочный + трекинг в каждом теге по отдельности.
+*/
+.t-display {
+	font-size: clamp(48px, 9vw, 113px);
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	font-weight: 400;
+}
+
+.t-heading-lg {
+	font-size: clamp(38px, 6vw, 78px);
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	font-weight: 400;
+}
+
+.t-heading {
+	font-size: clamp(30px, 4vw, 48px);
+	line-height: 1.1;
+	letter-spacing: -0.035em;
+	font-weight: 400;
+}
+
+.t-heading-sm {
+	font-size: clamp(26px, 3vw, 42px);
+	line-height: 1.2;
+	letter-spacing: -0.04em;
+	font-weight: 400;
+}
+
+/* Вес 200 для основного текста — фирменная черта референса.
+   Обычные сайты ставят 400; ультра-лайт делает абзацы «воздушными». */
+.t-body {
+	font-size: 18px;
+	line-height: 1.5;
+	font-weight: 200;
+}
+
+/* Мелкие подписи и лейблы: 14px, вес 600, капслок, разрядка */
+.t-label {
+	font-size: 14px;
+	line-height: 1.2;
+	letter-spacing: 0.025em;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
 /*
   ============================================
   АНИМАЦИИ
   ============================================
-  Здесь лежат стили, которых нет в Tailwind из коробки.
-  Обычные отступы и цвета пишем классами прямо в разметке,
-  а вот собственные анимации удобнее держать в одном месте.
 */
 
-/* Плавная прокрутка к якорям (#services, #contacts) вместо мгновенного прыжка */
 html {
 	scroll-behavior: smooth;
 }
 
-/*
-  ПОЯВЛЕНИЕ ПРИ ПРОКРУТКЕ
-  Работает так:
-  1. Блоку ставим class="reveal" — он невидим и сдвинут вниз на 24px
-  2. JS замечает, что блок доехал до экрана, и добавляет класс "is-visible"
-  3. Блок плавно всплывает на место
-*/
+/* Появление при прокрутке: JS вешает .is-visible, когда блок доехал до экрана */
 .reveal {
 	opacity: 0;
 	transform: translateY(24px);
 	transition:
-		opacity 0.7s ease-out,
-		transform 0.7s ease-out;
+		opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+		transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.is-visible {
@@ -34,45 +135,18 @@ html {
 	transform: translateY(0);
 }
 
-/*
-  Задержки — чтобы карточки появлялись не разом, а по очереди.
-  Вешаем на вторую карточку delay-1, на третью delay-2 и т.д.
-*/
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
 
-/*
-  СВЕЧЕНИЕ НА ПЕРВОМ ЭКРАНЕ
-  Размытое цветное пятно за заголовком. Медленно пульсирует.
-  pointer-events: none — чтобы пятно не перехватывало клики.
-*/
-.glow {
-	pointer-events: none;
-	position: absolute;
-	border-radius: 9999px;
-	filter: blur(100px);
-	opacity: 0.25;
-	animation: pulse 8s ease-in-out infinite;
-}
-
-@keyframes pulse {
-	0%, 100% { opacity: 0.18; transform: scale(1); }
-	50%      { opacity: 0.32; transform: scale(1.15); }
-}
-
-/*
-  ПОЯВЛЕНИЕ ПЕРВОГО ЭКРАНА
-  Он виден сразу при загрузке, ждать прокрутки нечего —
-  поэтому анимация запускается сама, без JS.
-*/
+/* Появление первого экрана — сразу при загрузке, ждать прокрутки нечего */
 @keyframes rise {
-	from { opacity: 0; transform: translateY(20px); }
+	from { opacity: 0; transform: translateY(24px); }
 	to   { opacity: 1; transform: translateY(0); }
 }
 
 .rise {
-	animation: rise 0.8s ease-out both;
+	animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .rise-delay-1 { animation-delay: 0.1s; }
@@ -80,21 +154,43 @@ html {
 .rise-delay-3 { animation-delay: 0.3s; }
 
 /*
-  ДОСТУПНОСТЬ — обязательный блок, не пропускай его.
+  ЧАСТИЦЫ
+  У Dala фирменный элемент — облако мелких цветных треугольников.
+  Здесь облегчённая версия: несколько десятков точек, медленно дрейфуют.
+  Разметку генерирует JS в index.astro.
+*/
+.particle {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	border-radius: 9999px;
+	animation: drift linear infinite;
+}
+
+@keyframes drift {
+	0%   { transform: translate(0, 0); opacity: 0; }
+	10%  { opacity: 1; }
+	90%  { opacity: 1; }
+	100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
+
+/*
+  ДОСТУПНОСТЬ
   У части людей в системе включено «уменьшить движение»: анимации
-  вызывают у них головокружение и тошноту. Этот код отключает
-  для них всё движение. Две минуты работы, а сайт остаётся
-  пригодным для всех. Профессионалы это делают всегда.
+  вызывают у них головокружение и тошноту. Отключаем для них движение.
+  Профессионалы делают это всегда — клиент не попросит, потому что не знает.
 */
 @media (prefers-reduced-motion: reduce) {
 	html { scroll-behavior: auto; }
 
 	.reveal,
 	.rise,
-	.glow {
+	.particle {
 		animation: none !important;
 		transition: none !important;
 		opacity: 1 !important;
 		transform: none !important;
 	}
+
+	.particle { opacity: 0.6 !important; }
 }

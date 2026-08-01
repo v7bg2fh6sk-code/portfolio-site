@@ -14,7 +14,6 @@ const services = [
 		price: 'от 35 000 ₽',
 		description: 'Подписки, приём платежей, база пользователей, админ-панель со статистикой.',
 		features: ['Платежи и подписки', 'База данных и админка', 'Реферальная система'],
-		featured: true,
 	},
 	{
 		title: 'Сайт-лендинг',
@@ -35,157 +34,183 @@ const services = [
 		<title>Леонид — разработчик Telegram-ботов</title>
 	</head>
 
-	<body class="min-h-screen overflow-x-hidden bg-neutral-950 text-neutral-100 antialiased">
+	<!-- bg-void — чистый чёрный из токенов, не «тёмно-серый». В этом стиле пустота и есть дизайн. -->
+	<body class="min-h-screen overflow-x-hidden bg-void font-sans text-bone-white antialiased">
 
-		<!--
-			ПЕРВЫЙ ЭКРАН
-			relative — нужно, чтобы светящиеся пятна внутри позиционировались
-			относительно этого блока, а не всей страницы.
-		-->
+		<!-- НАВИГАЦИЯ: прозрачная, без рамок и подложки -->
+		<nav class="relative z-20 mx-auto flex max-w-[1280px] items-center justify-between px-6 py-6">
+			<span class="t-label text-bone-white">Леонид</span>
+
+			<div class="flex items-center gap-6">
+				<!-- hidden sm:block — на телефоне ссылки прячем, оставляем только кнопку -->
+				<a href="#services" class="t-label hidden text-ash-gray transition-colors hover:text-bone-white sm:block">
+					Услуги
+				</a>
+				<a href="#cases" class="t-label hidden text-ash-gray transition-colors hover:text-bone-white sm:block">
+					Работы
+				</a>
+				<!-- Единственная залитая кнопка на экране. Фиолетовый — только для действия. -->
+				<a
+					href="https://t.me/yriveee"
+					class="t-label rounded-full bg-electric-iris px-4 py-3 text-bone-white transition-opacity hover:opacity-90"
+				>
+					Написать
+				</a>
+			</div>
+		</nav>
+
+		<!-- ПЕРВЫЙ ЭКРАН -->
 		<header class="relative overflow-hidden">
+			<!-- Сюда JS насыплет частицы -->
+			<div id="particles" class="pointer-events-none absolute inset-0"></div>
 
-			<!-- Два размытых пятна за текстом. Классы .glow и анимация — в global.css -->
-			<div class="glow -left-32 -top-32 h-96 w-96 bg-indigo-500"></div>
-			<div class="glow -right-40 top-20 h-96 w-96 bg-sky-500" style="animation-delay: 3s"></div>
-
-			<!-- relative + z-10 поднимают текст над пятнами -->
-			<div class="relative z-10 mx-auto max-w-3xl px-6 py-28 sm:py-36">
-				<p class="rise mb-4 text-sm uppercase tracking-widest text-neutral-500">
+			<div class="relative z-10 mx-auto max-w-[1280px] px-6 pb-[120px] pt-[60px] sm:pt-[96px]">
+				<!-- Амбер-лейбл над заголовком — акцентный цвет референса -->
+				<p class="rise t-label text-saffron-spark">
 					Разработка на заказ
 				</p>
 
-				<h1 class="rise rise-delay-1 text-4xl font-semibold leading-tight sm:text-6xl">
-					Telegram-боты,<br />
-					<!--
-						Градиентный текст. Как это устроено:
-						bg-gradient-to-r — заливаем блок градиентом слева направо
-						bg-clip-text + text-transparent — показываем заливку только внутри букв
-					-->
-					<span class="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">
-						которые приносят деньги
-					</span>
+				<!--
+					Заголовок весом 400, не жирный. Иерархия здесь держится
+					на размере и плотности букв, а не на толщине — это принцип стиля.
+				-->
+				<h1 class="rise rise-delay-1 t-display mt-[30px] max-w-[900px]">
+					Telegram-боты, которые приносят деньги
 				</h1>
 
-				<p class="rise rise-delay-2 mt-6 max-w-xl text-lg leading-relaxed text-neutral-400">
+				<p class="rise rise-delay-2 t-body mt-[36px] max-w-[520px] text-silver-mist">
 					Меня зовут Леонид. Делаю ботов с приёмом оплаты, базой пользователей
 					и админкой — от идеи до работающего сервера. Пишу код сам, серверы
 					настраиваю сам.
 				</p>
 
-				<div class="rise rise-delay-3 mt-10 flex flex-wrap gap-3">
-					<!--
-						hover:-translate-y-0.5 — кнопка чуть приподнимается под курсором
-						hover:shadow-lg — и получает тень. Мелочь, а сайт сразу «живой».
-					-->
+				<div class="rise rise-delay-3 mt-[36px] flex flex-wrap items-center gap-[24px]">
 					<a
 						href="https://t.me/yriveee"
-						class="inline-flex items-center rounded-lg bg-neutral-100 px-5 py-3 font-medium text-neutral-950 transition duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-lg hover:shadow-white/10"
+						class="t-label rounded-full bg-electric-iris px-[18px] py-[14px] text-bone-white transition-opacity hover:opacity-90"
 					>
 						Обсудить задачу
 					</a>
-					<a
-						href="#services"
-						class="inline-flex items-center rounded-lg border border-neutral-800 px-5 py-3 font-medium text-neutral-300 transition duration-200 hover:-translate-y-0.5 hover:border-neutral-600 hover:text-white"
-					>
-						Услуги и цены
+					<!-- Вторая ссылка — «призрачная», без фона. Залитая кнопка на экране только одна. -->
+					<a href="#services" class="t-label text-ash-gray transition-colors hover:text-bone-white">
+						Услуги и цены →
 					</a>
 				</div>
 			</div>
 		</header>
 
-		<!-- УСЛУГИ -->
-		<section id="services" class="border-t border-neutral-900">
-			<div class="mx-auto max-w-3xl px-6 py-20">
-				<h2 class="reveal text-2xl font-semibold sm:text-3xl">Услуги и цены</h2>
-				<p class="reveal reveal-delay-1 mt-3 text-neutral-400">
-					Цены — за типовую задачу. Точную назову после короткого разговора: часто
-					выходит дешевле, чем кажется.
-				</p>
+		<!--
+			УСЛУГИ
+			Без карточек: ни рамок, ни подложек, ни теней — только текст и воздух.
+			Разделяют блоки тонкие линии, а не панели.
+		-->
+		<section id="services" class="mx-auto max-w-[1280px] px-6 py-[96px]">
+			<p class="reveal t-label text-saffron-spark">Услуги</p>
+			<h2 class="reveal reveal-delay-1 t-heading mt-[24px] max-w-[600px]">
+				Цены и что входит
+			</h2>
+			<p class="reveal reveal-delay-2 t-body mt-[24px] max-w-[520px] text-silver-mist">
+				Цены — за типовую задачу. Точную назову после короткого разговора:
+				часто выходит дешевле, чем кажется.
+			</p>
 
-				<div class="mt-10 grid gap-4 sm:grid-cols-3">
-					{
-						services.map((service, index) => (
-							/*
-								index — порядковый номер карточки (0, 1, 2).
-								По нему вешаем разную задержку, чтобы карточки
-								появлялись друг за другом, а не все разом.
-							*/
-							<div
-								class={`reveal reveal-delay-${index + 1} group rounded-xl border p-6 transition duration-300 hover:-translate-y-1 ${
-									service.featured
-										? 'border-neutral-700 bg-neutral-900 hover:border-indigo-500/50'
-										: 'border-neutral-900 bg-neutral-950 hover:border-neutral-700'
-								}`}
-							>
-								<h3 class="font-medium">{service.title}</h3>
+			<div class="mt-[60px]">
+				{
+					services.map((service, index) => (
+						/*
+							Каждая услуга — строка в две колонки: слева название и цена,
+							справа описание. На телефоне колонки складываются в одну.
+						*/
+						<div
+							class={`reveal reveal-delay-${index + 1} grid gap-[24px] border-t border-white/10 py-[36px] sm:grid-cols-[1fr_1.2fr]`}
+						>
+							<div>
+								<h3 class="t-heading-sm">{service.title}</h3>
+								<p class="t-body mt-[12px] text-electric-iris">{service.price}</p>
+							</div>
 
-								{/* group-hover: цена меняет цвет при наведении на всю карточку, а не только на саму цену */}
-								<p class="mt-2 text-2xl font-semibold transition-colors duration-300 group-hover:text-indigo-300">
-									{service.price}
-								</p>
+							<div>
+								<p class="t-body text-silver-mist">{service.description}</p>
 
-								<p class="mt-3 text-sm leading-relaxed text-neutral-400">
-									{service.description}
-								</p>
-
-								<ul class="mt-4 space-y-2">
+								<ul class="mt-[24px] space-y-[12px]">
 									{service.features.map((feature) => (
-										<li class="flex gap-2 text-sm text-neutral-400">
-											<span class="text-neutral-600">—</span>
+										<li class="t-body flex gap-[12px] text-ash-gray">
+											<span class="text-electric-iris">/</span>
 											<span>{feature}</span>
 										</li>
 									))}
 								</ul>
 							</div>
-						))
-					}
-				</div>
+						</div>
+					))
+				}
 			</div>
 		</section>
 
 		<!-- РАБОТЫ — наполним на Этапе 3 -->
-		<section id="cases" class="border-t border-neutral-900">
-			<div class="mx-auto max-w-3xl px-6 py-20">
-				<h2 class="reveal text-2xl font-semibold sm:text-3xl">Работы</h2>
-				<p class="reveal reveal-delay-1 mt-3 text-neutral-400">Скоро здесь будут кейсы.</p>
-			</div>
+		<section id="cases" class="mx-auto max-w-[1280px] px-6 py-[96px]">
+			<p class="reveal t-label text-saffron-spark">Работы</p>
+			<h2 class="reveal reveal-delay-1 t-heading mt-[24px] max-w-[600px]">
+				Что уже сделано
+			</h2>
+			<p class="reveal reveal-delay-2 t-body mt-[24px] max-w-[520px] text-silver-mist">
+				Скоро здесь будут кейсы.
+			</p>
 		</section>
 
 		<!-- КОНТАКТЫ — этот блок пишешь ты -->
-		<section id="contacts" class="border-t border-neutral-900">
-			<div class="mx-auto max-w-3xl px-6 py-20">
-				<h2 class="reveal text-2xl font-semibold sm:text-3xl">Контакты</h2>
-				<p class="reveal reveal-delay-1 mt-3 text-neutral-400">TODO: блок делает Леонид</p>
-			</div>
+		<section id="contacts" class="mx-auto max-w-[1280px] px-6 py-[96px]">
+			<p class="reveal t-label text-saffron-spark">Контакты</p>
+			<h2 class="reveal reveal-delay-1 t-heading mt-[24px] max-w-[600px]">
+				TODO: блок делает Леонид
+			</h2>
 		</section>
 
 		<script>
-			/*
-				Появление блоков при прокрутке.
-
-				IntersectionObserver — встроенный в браузер механизм: он следит
-				за элементами и сообщает, когда те попадают в видимую область.
-				Раньше для этого считали позицию прокрутки вручную на каждый пиксель —
-				браузер от этого тормозил. Здесь всё считает сам движок.
-			*/
+			/* ---- Появление блоков при прокрутке ---- */
 			const observer = new IntersectionObserver(
 				(entries) => {
 					entries.forEach((entry) => {
 						if (entry.isIntersecting) {
 							entry.target.classList.add('is-visible');
-							// Показали один раз — дальше не следим, лишняя работа не нужна
-							observer.unobserve(entry.target);
+							observer.unobserve(entry.target); // показали — дальше не следим
 						}
 					});
 				},
-				{
-					// Срабатывает, когда блок показался на 15% — не в самый последний момент
-					threshold: 0.15,
-				}
+				{ threshold: 0.15 }
 			);
 
-			// Находим все элементы с классом reveal и отдаём под наблюдение
 			document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+			/* ---- Частицы на первом экране ---- */
+			const field = document.getElementById('particles');
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			if (field) {
+				// Цвета берём из палитры референса, а не случайные
+				const colors = ['#8052ff', '#ffb829', '#15846e', '#bdbdbd'];
+				// При включённом «уменьшить движение» точек меньше и они не летают
+				const count = reduceMotion ? 18 : 46;
+
+				for (let i = 0; i < count; i++) {
+					const dot = document.createElement('span');
+					dot.className = 'particle';
+
+					dot.style.left = `${Math.random() * 100}%`;
+					dot.style.top = `${Math.random() * 100}%`;
+					dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+					dot.style.opacity = `${0.25 + Math.random() * 0.5}`;
+
+					// --dx / --dy читает @keyframes drift в global.css: куда дрейфует точка
+					dot.style.setProperty('--dx', `${(Math.random() - 0.5) * 120}px`);
+					dot.style.setProperty('--dy', `${(Math.random() - 0.5) * 120}px`);
+
+					dot.style.animationDuration = `${12 + Math.random() * 18}s`;
+					dot.style.animationDelay = `${Math.random() * -20}s`; // минус — чтобы стартовали вразнобой
+
+					field.appendChild(dot);
+				}
+			}
 		</script>
 	</body>
 </html>
