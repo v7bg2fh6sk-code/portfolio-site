@@ -34,22 +34,19 @@ const services = [
 		<title>Леонид — разработчик Telegram-ботов</title>
 	</head>
 
-	<!-- bg-void — чистый чёрный из токенов, не «тёмно-серый». В этом стиле пустота и есть дизайн. -->
 	<body class="min-h-screen overflow-x-hidden bg-void font-sans text-bone-white antialiased">
 
-		<!-- НАВИГАЦИЯ: прозрачная, без рамок и подложки -->
+		<!-- НАВИГАЦИЯ -->
 		<nav class="relative z-20 mx-auto flex max-w-[1280px] items-center justify-between px-6 py-6">
 			<span class="t-label text-bone-white">Леонид</span>
 
 			<div class="flex items-center gap-6">
-				<!-- hidden sm:block — на телефоне ссылки прячем, оставляем только кнопку -->
 				<a href="#services" class="t-label hidden text-ash-gray transition-colors hover:text-bone-white sm:block">
 					Услуги
 				</a>
 				<a href="#cases" class="t-label hidden text-ash-gray transition-colors hover:text-bone-white sm:block">
 					Работы
 				</a>
-				<!-- Единственная залитая кнопка на экране. Фиолетовый — только для действия. -->
 				<a
 					href="https://t.me/yriveee"
 					class="t-label rounded-full bg-electric-iris px-4 py-3 text-bone-white transition-opacity hover:opacity-90"
@@ -59,39 +56,53 @@ const services = [
 			</div>
 		</nav>
 
-		<!-- ПЕРВЫЙ ЭКРАН -->
-		<header class="relative overflow-hidden">
-			<!-- Сюда JS насыплет частицы -->
+		<!--
+			ПЕРВЫЙ ЭКРАН — центрированная композиция
+			text-center + items-center + mx-auto — три места, где задаётся центровка:
+			текст внутри блока, блоки внутри колонки, сама колонка на странице.
+		-->
+		<header class="relative flex min-h-[88vh] items-center overflow-hidden">
+
+			<!-- Частицы: JS насыплет их сюда -->
 			<div id="particles" class="pointer-events-none absolute inset-0"></div>
 
-			<div class="relative z-10 mx-auto max-w-[1280px] px-6 pb-[120px] pt-[60px] sm:pt-[96px]">
-				<!-- Амбер-лейбл над заголовком — акцентный цвет референса -->
+			<!--
+				СФЕРА-КАПЛЯ
+				Стоит за текстом по центру экрана.
+				left-1/2 + -translate-x-1/2 — приём центрирования для absolute-блока:
+				сдвигаем на половину ширины экрана, потом назад на половину своей ширины.
+			-->
+			<div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+				<div class="blob h-[340px] w-[340px] opacity-70 sm:h-[520px] sm:w-[520px]"></div>
+				<!-- Кольцо поверх — очерчивает сферу -->
+				<div class="blob-ring absolute inset-0 m-auto h-[380px] w-[380px] sm:h-[580px] sm:w-[580px]"></div>
+			</div>
+
+			<!-- Контент поверх сферы -->
+			<div class="relative z-10 mx-auto w-full max-w-[820px] px-6 py-[96px] text-center">
 				<p class="rise t-label text-saffron-spark">
 					Разработка на заказ
 				</p>
 
-				<!--
-					Заголовок весом 400, не жирный. Иерархия здесь держится
-					на размере и плотности букв, а не на толщине — это принцип стиля.
-				-->
-				<h1 class="rise rise-delay-1 t-display mt-[30px] max-w-[900px]">
+				<h1 class="rise rise-delay-1 t-display mt-[30px]">
 					Telegram-боты, которые приносят деньги
 				</h1>
 
-				<p class="rise rise-delay-2 t-body mt-[36px] max-w-[520px] text-silver-mist">
+				<!-- mx-auto центрирует сам абзац, ограниченный по ширине -->
+				<p class="rise rise-delay-2 t-body mx-auto mt-[36px] max-w-[520px] text-silver-mist">
 					Меня зовут Леонид. Делаю ботов с приёмом оплаты, базой пользователей
 					и админкой — от идеи до работающего сервера. Пишу код сам, серверы
 					настраиваю сам.
 				</p>
 
-				<div class="rise rise-delay-3 mt-[36px] flex flex-wrap items-center gap-[24px]">
+				<!-- justify-center — центрирует кнопки внутри flex-строки -->
+				<div class="rise rise-delay-3 mt-[36px] flex flex-wrap items-center justify-center gap-[24px]">
 					<a
 						href="https://t.me/yriveee"
 						class="t-label rounded-full bg-electric-iris px-[18px] py-[14px] text-bone-white transition-opacity hover:opacity-90"
 					>
 						Обсудить задачу
 					</a>
-					<!-- Вторая ссылка — «призрачная», без фона. Залитая кнопка на экране только одна. -->
 					<a href="#services" class="t-label text-ash-gray transition-colors hover:text-bone-white">
 						Услуги и цены →
 					</a>
@@ -99,48 +110,37 @@ const services = [
 			</div>
 		</header>
 
-		<!--
-			УСЛУГИ
-			Без карточек: ни рамок, ни подложек, ни теней — только текст и воздух.
-			Разделяют блоки тонкие линии, а не панели.
-		-->
-		<section id="services" class="mx-auto max-w-[1280px] px-6 py-[96px]">
+		<!-- УСЛУГИ — тоже по центру -->
+		<section id="services" class="mx-auto max-w-[1280px] px-6 py-[96px] text-center">
 			<p class="reveal t-label text-saffron-spark">Услуги</p>
-			<h2 class="reveal reveal-delay-1 t-heading mt-[24px] max-w-[600px]">
+			<h2 class="reveal reveal-delay-1 t-heading mx-auto mt-[24px] max-w-[600px]">
 				Цены и что входит
 			</h2>
-			<p class="reveal reveal-delay-2 t-body mt-[24px] max-w-[520px] text-silver-mist">
+			<p class="reveal reveal-delay-2 t-body mx-auto mt-[24px] max-w-[520px] text-silver-mist">
 				Цены — за типовую задачу. Точную назову после короткого разговора:
 				часто выходит дешевле, чем кажется.
 			</p>
 
-			<div class="mt-[60px]">
+			<div class="mx-auto mt-[60px] max-w-[900px]">
 				{
 					services.map((service, index) => (
-						/*
-							Каждая услуга — строка в две колонки: слева название и цена,
-							справа описание. На телефоне колонки складываются в одну.
-						*/
-						<div
-							class={`reveal reveal-delay-${index + 1} grid gap-[24px] border-t border-white/10 py-[36px] sm:grid-cols-[1fr_1.2fr]`}
-						>
-							<div>
-								<h3 class="t-heading-sm">{service.title}</h3>
-								<p class="t-body mt-[12px] text-electric-iris">{service.price}</p>
-							</div>
+						<div class={`reveal reveal-delay-${index + 1} border-t border-white/10 py-[36px]`}>
+							<h3 class="t-heading-sm">{service.title}</h3>
+							<p class="t-body mt-[12px] text-electric-iris">{service.price}</p>
 
-							<div>
-								<p class="t-body text-silver-mist">{service.description}</p>
+							<p class="t-body mx-auto mt-[24px] max-w-[520px] text-silver-mist">
+								{service.description}
+							</p>
 
-								<ul class="mt-[24px] space-y-[12px]">
-									{service.features.map((feature) => (
-										<li class="t-body flex gap-[12px] text-ash-gray">
-											<span class="text-electric-iris">/</span>
-											<span>{feature}</span>
-										</li>
-									))}
-								</ul>
-							</div>
+							{/* flex-wrap + justify-center — пункты идут в строку и центрируются */}
+							<ul class="mt-[24px] flex flex-wrap justify-center gap-x-[24px] gap-y-[12px]">
+								{service.features.map((feature) => (
+									<li class="t-body flex gap-[12px] text-ash-gray">
+										<span class="text-electric-iris">/</span>
+										<span>{feature}</span>
+									</li>
+								))}
+							</ul>
 						</div>
 					))
 				}
@@ -148,20 +148,20 @@ const services = [
 		</section>
 
 		<!-- РАБОТЫ — наполним на Этапе 3 -->
-		<section id="cases" class="mx-auto max-w-[1280px] px-6 py-[96px]">
+		<section id="cases" class="mx-auto max-w-[1280px] px-6 py-[96px] text-center">
 			<p class="reveal t-label text-saffron-spark">Работы</p>
-			<h2 class="reveal reveal-delay-1 t-heading mt-[24px] max-w-[600px]">
+			<h2 class="reveal reveal-delay-1 t-heading mx-auto mt-[24px] max-w-[600px]">
 				Что уже сделано
 			</h2>
-			<p class="reveal reveal-delay-2 t-body mt-[24px] max-w-[520px] text-silver-mist">
+			<p class="reveal reveal-delay-2 t-body mx-auto mt-[24px] max-w-[520px] text-silver-mist">
 				Скоро здесь будут кейсы.
 			</p>
 		</section>
 
 		<!-- КОНТАКТЫ — этот блок пишешь ты -->
-		<section id="contacts" class="mx-auto max-w-[1280px] px-6 py-[96px]">
+		<section id="contacts" class="mx-auto max-w-[1280px] px-6 py-[96px] text-center">
 			<p class="reveal t-label text-saffron-spark">Контакты</p>
-			<h2 class="reveal reveal-delay-1 t-heading mt-[24px] max-w-[600px]">
+			<h2 class="reveal reveal-delay-1 t-heading mx-auto mt-[24px] max-w-[600px]">
 				TODO: блок делает Леонид
 			</h2>
 		</section>
@@ -173,7 +173,7 @@ const services = [
 					entries.forEach((entry) => {
 						if (entry.isIntersecting) {
 							entry.target.classList.add('is-visible');
-							observer.unobserve(entry.target); // показали — дальше не следим
+							observer.unobserve(entry.target);
 						}
 					});
 				},
@@ -182,14 +182,12 @@ const services = [
 
 			document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-			/* ---- Частицы на первом экране ---- */
+			/* ---- Частицы вокруг сферы ---- */
 			const field = document.getElementById('particles');
 			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 			if (field) {
-				// Цвета берём из палитры референса, а не случайные
 				const colors = ['#8052ff', '#ffb829', '#15846e', '#bdbdbd'];
-				// При включённом «уменьшить движение» точек меньше и они не летают
 				const count = reduceMotion ? 18 : 46;
 
 				for (let i = 0; i < count; i++) {
@@ -201,12 +199,11 @@ const services = [
 					dot.style.background = colors[Math.floor(Math.random() * colors.length)];
 					dot.style.opacity = `${0.25 + Math.random() * 0.5}`;
 
-					// --dx / --dy читает @keyframes drift в global.css: куда дрейфует точка
 					dot.style.setProperty('--dx', `${(Math.random() - 0.5) * 120}px`);
 					dot.style.setProperty('--dy', `${(Math.random() - 0.5) * 120}px`);
 
 					dot.style.animationDuration = `${12 + Math.random() * 18}s`;
-					dot.style.animationDelay = `${Math.random() * -20}s`; // минус — чтобы стартовали вразнобой
+					dot.style.animationDelay = `${Math.random() * -20}s`;
 
 					field.appendChild(dot);
 				}

@@ -154,6 +154,55 @@ html {
 .rise-delay-3 { animation-delay: 0.3s; }
 
 /*
+  ============================================
+  СФЕРА-КАПЛЯ
+  ============================================
+  Главный объект первого экрана. Три эффекта работают вместе:
+
+  1. border-radius из восьми значений — та самая «каплевидность».
+     Запись 60% 40% 30% 70% / 60% 30% 70% 40% задаёт четыре угла
+     по горизонтали и четыре по вертикали. Разные числа = форма
+     перестаёт быть кругом и становится органической.
+  2. @keyframes morph плавно меняет эти значения — капля «дышит».
+  3. blur размывает края, чтобы объект светился, а не лежал плашкой.
+*/
+.blob {
+	border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+	background: radial-gradient(
+		circle at 30% 30%,
+		var(--color-electric-iris) 0%,
+		#5b2fd6 35%,
+		var(--color-deep-verdant) 70%,
+		#000000 100%
+	);
+	filter: blur(28px);
+	animation:
+		morph 16s ease-in-out infinite,
+		float 11s ease-in-out infinite;
+}
+
+@keyframes morph {
+	0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+	25%      { border-radius: 40% 60% 65% 35% / 45% 55% 45% 55%; }
+	50%      { border-radius: 35% 65% 40% 60% / 65% 40% 60% 35%; }
+	75%      { border-radius: 55% 45% 55% 45% / 35% 60% 40% 65%; }
+}
+
+/* Медленное покачивание: сфера не приколочена, а висит в воздухе */
+@keyframes float {
+	0%, 100% { transform: translateY(0) scale(1); }
+	50%      { transform: translateY(-24px) scale(1.04); }
+}
+
+/* Тонкое кольцо вокруг капли — очерчивает «сферу», не перекрывая свечение */
+.blob-ring {
+	border-radius: 9999px;
+	border: 1px solid rgb(255 255 255 / 0.08);
+	animation: float 11s ease-in-out infinite;
+	animation-delay: -1.5s;
+}
+
+/*
   ЧАСТИЦЫ
   У Dala фирменный элемент — облако мелких цветных треугольников.
   Здесь облегчённая версия: несколько десятков точек, медленно дрейфуют.
@@ -185,7 +234,9 @@ html {
 
 	.reveal,
 	.rise,
-	.particle {
+	.particle,
+	.blob,
+	.blob-ring {
 		animation: none !important;
 		transition: none !important;
 		opacity: 1 !important;
